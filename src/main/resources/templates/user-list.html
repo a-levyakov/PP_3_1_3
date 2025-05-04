@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+<br>
+<br>
+<form th:method="GET" th:action="@{/admin/user-create}">
+    <button type="submit" class="btn btn-primary">Create User</button>
+</form>
+<br>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Roles</th>
+        <th>Actions</th>
+    </tr>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}">id</td>
+        <td th:text="${user.getFirstName}">firstName</td>
+        <td th:text="${user.getLastName}">lastName</td>
+        <td th:text="${user.getUsername()}">username</td>
+        <td th:text="${user.getPassword()}">password</td>
+        <td>
+            <ul th:each="role: ${user.getRoles()}" th:text="${role.getName()}">role</ul>
+        </td>
+        <td>
+            <form th:method="GET" th:action="@{/admin/user-update/{id}(id=${user.id})}">
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </form>
+            <form th:method="DELETE" th:action="@{/admin/user-delete/{id}(id=${user.id})}">
+                <button type="submit" class="btn btn-primary">Delete</button>
+            </form>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+<br/>
+<form th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
+</form>
+
+</body>
+</html>
