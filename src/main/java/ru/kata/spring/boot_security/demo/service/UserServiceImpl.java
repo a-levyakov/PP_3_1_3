@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -44,7 +45,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User showUserById(Long id) {
+    @Transactional(readOnly = true)
+    public User getUSerById(Long id) {
         return userRepository.getOne(id);
     }
 
@@ -52,19 +54,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public void update(Long id, User user) {
         user.setId(id);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findByEmail(String email) {
         return userRepository.findByUsername(email);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) {
         User user = userRepository.findByUsername(email);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", email));
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());

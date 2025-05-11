@@ -19,7 +19,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getAllUsers() {
+    @Transactional(readOnly = true)
+    public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
@@ -30,12 +31,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         roleRepository.deleteById(id);
     }
 
     @Override
-    public Role showUserById(Long id) {
+    @Transactional(readOnly = true)
+    public Role getRoleById(Long id) {
         return roleRepository.getOne(id);
     }
 }
