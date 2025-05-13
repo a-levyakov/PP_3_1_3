@@ -43,8 +43,8 @@ public class Init {
         allRoles.add(adminRole);
         allRoles.add(userRole);
 
-        userService.save(new User("Igor", "Igorevich", "admin", "admin", adminRoles));
-        userService.save(new User("Mark", "Makrkovich", "user", "user", userRoles));
-        userService.save(new User("Misha", "Mihoilovich", "test", "test", allRoles));
+        userService.save(new User("Igor", "Igorevich", 22,  "admin@admin.ru", "admin", adminRoles));
+        userService.save(new User("Mark", "Makrkovich", 11,"user@user.ru", "user", userRoles));
+        userService.save(new User("Misha", "Mihoilovich",33, "test@test.ru", "test", allRoles));
     }
 }
